@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Redis Task Queue Demo</title>
+</head>
+
+<body>
+  <h1>Redis Task Queue Demo</h1>
+
+  <div>
+    <h2>Task1 (string)</h2>
+    <input type="text" id="task1Input" placeholder="Message for Task1">
+    <button id="addTask1Btn">Add Task1</button>
+  </div>
+  <div>counter=<span id="counterVal"></span></div>
+
+  <div>
+    <h2>Task2 (object)</h2>
+    <input type="text" id="task2Name" placeholder="Name">
+    <input type="number" id="task2Age" placeholder="Age">
+    <button id="addTask2Btn">Add Task2</button>
+  </div>
+  <!-- <script>
+    let counter = 1;
+
+
+    document.getElementById('addTask1Btn').addEventListener('click', async () => {
+      console.log("click ")
+      try {
+        let data = {
+          // name: `name ${counter}`,
+          counter: counter
+        }
+        console.log("chạy vao task sô", counter)
+        const res = await fetch('/task1', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ message: counter })
+        });
+        console.log("res=",res)
+        if (res.ok) {
+          console.log("chạy vao task sô", counter)
+          // alert('Task added: ' + counter);
+        }
+        counter++;
+      } catch (err) {
+        console.error(err);
+        alert('Failed to add task');
+      }
+    });
+  </script> -->
+
+  <script>
+    // Add Task1
+    let counter = 1;
+    document.getElementById("addTask1Btn").addEventListener("click", async () => {
+      console.log("click me")
+      // const message = document.getElementById("task1Input").value;
+      // if (!message) return alert("Enter message for Task1");
+      try {
+        const res = await fetch("/task1", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: counter })
+        });
+        if (res.ok) {
+          console.log("Task1 added:", counter);
+          // document.getElementById("task1Input").value = "";
+        }
+
+      } catch (err) {
+        console.error(err);
+      }
+      counter++;
+      const counterValDom = document.getElementById('counterVal')
+      console.log("counterValDom", counterValDom)
+      console.log("counter", counter)
+      counterValDom.innerHTML = counter
+    });
+
+    // Add Task2
+    document.getElementById("addTask2Btn").addEventListener("click", async () => {
+      const name = document.getElementById("task2Name").value;
+      const age = parseInt(document.getElementById("task2Age").value);
+      if (!name || !age) {
+        // return alert("Enter name and age for Task2");
+        console.log("Enter name and age for Task2")
+        return
+      }
+
+      try {
+        const res = await fetch("/task2", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ obj: { name, age } })
+        });
+        if (res.ok) {
+          console.log("Task2 added:", { name, age });
+          document.getElementById("task2Name").value = "";
+          document.getElementById("task2Age").value = "";
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    });
+  </script>
+</body>
+
+</html>
