@@ -1,0 +1,4 @@
+Invoke-WebRequest -Uri https://github.com/microsoftarchive/redis/releases/download/win-3.2.100/Redis-x64-3.2.100.zip -OutFile "$env:USERPROFILE\Downloads\Redis.zip"
+Expand-Archive -Path "$env:USERPROFILE\Downloads\Redis.zip" -DestinationPath "$env:USERPROFILE\Redis"
+cd "$env:USERPROFILE\Redis"
+.\redis-server.exe

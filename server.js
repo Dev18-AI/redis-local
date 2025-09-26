@@ -10,7 +10,7 @@ const PORT = 3000;
 // Add task1 (string)
 app.post("/task1", async (req, res) => {
   const { message } = req.body;
-  console.log("add message", message)
+  // console.log("add message", message)
   await addTask1(message);
   res.send("Task1 added");
 });
